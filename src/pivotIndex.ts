@@ -5,13 +5,12 @@
 //     2                            4
 
 // O(N)
-var pivotIndex = function (nums) { // nums.length === N
+var pivotIndex = function (nums: number[]) { // nums.length === N
   const sum = nums.reduce((a, b) => a + b, 0);
-
   let left = 0;
   for (let i = 0; i < nums.length; i++) {
     let right = sum - left - nums[i];
-    if (left === right) return i; 
+    if (left === right) return i;
     left += nums[i]
     console.log(left);
   }
@@ -21,7 +20,7 @@ var pivotIndex = function (nums) { // nums.length === N
 //                                   i===2
 console.log(">>", pivotIndex([1, 7, 3, 6, 5, 6])); // === 3
 
-// 
+//
 
 
 const N = 64_000_000;
@@ -30,9 +29,9 @@ array[N - 1] = 1;
 // 0 0 0 0 0 0 0 0 0 1
 
 
-console.time(N);
+console.time(String(N));
 // console.log(pivotIndex(array));
-console.timeEnd(N);
+console.timeEnd(String(N));
 
 //              1             2             3
 //       5000: 28.378ms
@@ -44,7 +43,7 @@ console.timeEnd(N);
 //    1600000:                             23.194ms
 //   16000000:                             120.606ms
 //   32000000:                             234.014ms
-//   64000000: 
+//   64000000:
 
 
 
@@ -67,7 +66,7 @@ console.timeEnd(N);
 // терабайт =
 // гигабайт = 1_000_000_000 байт
 // мегабайт = 1000 килобайт = 1_000_000 байт
-// килобайт = 1000 байт 
+// килобайт = 1000 байт
 
 
 // https://leetcode.com/problems/range-sum-query-immutable/description/
