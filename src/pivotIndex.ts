@@ -17,10 +17,8 @@ var pivotIndex = function (nums: number[]) { // nums.length === N
   return -1;
 };
 
-//                                   i===2
+//                                  i===2
 console.log(">>", pivotIndex([1, 7, 3, 6, 5, 6])); // === 3
-
-//
 
 
 const N = 64_000_000;
