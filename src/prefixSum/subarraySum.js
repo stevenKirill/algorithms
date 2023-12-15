@@ -52,7 +52,7 @@ function subarraySumLinear(nums, target) {
 //   4: 1,
 // }
 //                          0  1  3  4
-console.log(subarraySumLinear([1, 2, 1], 3));
+// console.log(subarraySumLinear([1, 2, 1], 3));
 //                             ====
 //                                ----
 
@@ -103,3 +103,4 @@ console.log(subarraySumLinear([1, 2, 1], 3));
 
 
 // https://leetcode.com/problems/range-sum-query-2d-immutable/
+
