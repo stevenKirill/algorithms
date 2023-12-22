@@ -19,7 +19,7 @@
 // 1  1 2 2 3 4 5 3
 // [0, 1, 1, 0, 1, 1, 1, 0]
 
-var findMaxLength2 = function(nums) {
+var findMaxLength = function(nums) {
   // создать объект с разницей между 1 и 0 на данный момент (значение индекc)
   let diff2firstOccurrence = { 0: -1 };
   let diff = 0;
@@ -51,19 +51,11 @@ var findMaxLength2 = function(nums) {
 // { '0': -1, '1': 2, '2': 5, '-1': 0 }
 
 // max = 2 max = 4
-/*/ {
-  -1: 0,
-  0: -1,
-  1: 2,
-  -1: 0,
-  2: 5,
-}
-/*/
 //            index         0  1  2  3  4  5  6
 //            count        -1  0  1  0  1  2  1
-// console.log(findMaxLength2([0, 1, 1, 0, 1, 1, 0])); // 4
+console.log(findMaxLength([0, 1, 1, 0, 1, 1, 0])); // 4
 // https://magma.com/d/IpD33hMJA8
 
 // index                -1  0  1  2  3  4  5  6  7
 // balance               0  1  2  3  4  3  2  1  0
-console.log(findMaxLength2([1, 1, 1, 1, 0, 0, 0, 0])); //
+// console.log(findMaxLength([1, 1, 1, 1, 0, 0, 0, 0])); //
