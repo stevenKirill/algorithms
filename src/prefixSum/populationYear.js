@@ -24,7 +24,7 @@ var maximumPopulationBF = function(logs) {
 // ]
 
 
-// console.log(maximumPopulation([[1950,1961],[1960,1971],[1970,1981]])); // 2
+// console.log(maximumPopulationBF([[1950,1961],[1960,1971],[1970,1981]])); // 2
 
 
 // console.log(maximumPopulationBF([
@@ -79,5 +79,6 @@ console.log(maximumPopulation([
   [8, 20],
   [16, 23],
 ]));
-
+// [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+//
 /// https://magma.com/d/0FOKS5vSDu
