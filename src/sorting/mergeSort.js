@@ -1,3 +1,6 @@
+let counter = 0;
+
+// 2N - 1 вызовов
 function mergeSort(arr) {
   if (arr.length <= 1) {
     return [...arr];
@@ -9,22 +12,6 @@ function mergeSort(arr) {
   return result;
 }
 
-// [4, 2, 1, 3] 1 2 3 4
-// [4, 2] // [3, 1]  2 4 1 3
-// [4] [2] [3] [1]
-
-const x = [3];
-const y = mergeSort(x);
-
-y.push(100);
-
-console.log(x)
-console.log(y)
-
-
-// console.log(mergeSort([2, 5, 8, 1, 4, 6, 3, 7, 9]));
-
-
 //                   A     B
 function mergeArrays(arr1, arr2) { // O(A + B)
   let result = [];
@@ -32,23 +19,36 @@ function mergeArrays(arr1, arr2) { // O(A + B)
   let i2 = 0;
   while (i1 < arr1.length && i2 < arr2.length) {
     if (arr1[i1] < arr2[i2]) {
+      counter++;
       result.push(arr1[i1]);
       i1++;
     } else {
+      counter++;
       result.push(arr2[i2]);
       i2++;
     }
   }
   while (i2 !== arr2.length) {
+    counter++;
     result.push(arr2[i2]);
     i2++;
   }
   while (i1 !== arr1.length) {
+    counter++;
     result.push(arr1[i1]);
     i1++;
   }
   return result;
 }
+
+
+const N = 100_000;
+const arr = Array(N).fill(0);
+
+mergeSort(arr);
+
+console.log({ counter, nlogn: Math.floor(N * Math.log2(N)) })
+
 // 1 2
 // 1 2
 // 3 2
@@ -76,3 +76,63 @@ function mergeArrays(arr1, arr2) { // O(A + B)
 //   105, 106, 107,
 //   300, 302, undefined
 // ]
+
+
+// { '2': 1, '3': 3, '5': 2, '7': 2, '9': 1 }
+function solve(arr) {
+  let map = {};
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] in map) {
+      map[arr[i]]++;
+    } else {
+      map[arr[i]] = 1;
+    }
+  }
+  return arr.sort((a, b) => {
+    // 2 3
+    if (map[a] > map[b]) {
+      return -1;
+    }
+    if (map[b] > map[a]) {
+      return 1;
+    }
+    if (a > b) {
+      return 1;
+    }
+    if (b > a) {
+      return -1;
+    }
+    return 0;
+  })
+}
+
+// https://maxcode.dev/problems/object-group-by
+
+function solve(arr) {
+  const groups = Object.groupBy(arr, x => x);
+  return Object.values(groups).sort((a, b) => b.length - a.length).flat();
+}
+
+console.log(solve([2,3,5,3,7,9,5,3,7]));
+
+// {
+//   "2": [
+//       2
+//   ],
+//   "3": [
+//       3,
+//       3,
+//       3
+//   ],
+//   "5": [
+//       5,
+//       5
+//   ],
+//   "7": [
+//       7,
+//       7
+//   ],
+//   "9": [
+//       9
+//   ]
+// }
