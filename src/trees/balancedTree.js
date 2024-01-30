@@ -36,12 +36,29 @@ var isBalanced = function(root) {
   return false;
 };
 
+var isBalanced = root => helper(root)[1];
+
+var helper = function(root) {
+  if (root === null) {
+    return [0, true];
+  }
+  const [r, rightBalanced] = helper(root.right);
+  const [l, leftBalanced] = helper(root.left);
+
+  const height = Math.max(l, r) + 1;
+  const balanced = Math.abs(r - l) <= 1 && rightBalanced && leftBalanced;
+
+  return [height, balanced];
+
+};
+
 // console.log(perfectTree(3))
 //      0
 //    /   \
 //   0     0
 //  / \   / \
 // 0   0 0   0
+//          / \
 
 // perfectTree(2)
 //      0
@@ -52,6 +69,14 @@ var isBalanced = function(root) {
 //      0
 
 // perfectTree(0)
+
+//  1
+//   \
+//    2
+//     \
+//      3
+//       \
+//        4
 
 
 function perfectTree(height) {
@@ -104,6 +129,6 @@ for (let H = 0; H < 1000; H++) {
 // https://magma.com/d/C300dDZZrH
 
 
-// https://leetcode.com/problems/path-sum/description/
+// https://leetcode.com/problems/path-sum-ii/description/
 // https://leetcode.com/problems/count-complete-tree-nodes/description/
 // https://leetcode.com/problems/most-frequent-subtree-sum/description/
