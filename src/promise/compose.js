@@ -1,21 +1,26 @@
 
-// then
+// then и for
 function compose(fns) {
   return function(arg) {
-    return new Promise((resolve, reject) => {
-      let promise;
-      let res;
-      for (let i = 0; i < fns.lenght; i++) {
-        if (i === 0) {
-          promise = fn(arg)
-        }
-        promise.then((x) => {
-          res = fn(x)
-          resolve(res)
-        })
-      }
-      resolve(res)
-    })
+    let p = Promise.resolve(arg)
+
+    for(let i = fns.length - 1; i >= 0; i--) {
+      // p = p.then((x) => fns[i](x))
+      p = p.then(fns[i])
+    }
+
+    ["12", "45"].map(Number);
+
+    return p;
+  }
+}
+
+function composeReduce(fns) {
+  return function(arg) {
+    return fns.reduceRight(
+      (acc, fn) => acc.then(fn),
+      Promise.resolve(arg)
+    )
   }
 }
 
@@ -36,14 +41,23 @@ function compose2(fns) {
   }
 }
 
-const square = x => new Promise(r => setTimeout(r, 2000, x ** 2));
-const divideBy5 = x => new Promise(r => setTimeout(r, 1500, x / 5));
-const multiplyBy3 = x => new Promise(r => setTimeout(r, 500, x * 3));
+const square = x => {
+  console.log('square')
+  return new Promise(r => setTimeout(r, 2000, x ** 2));
+}
+const divideBy5 = x => {
+  console.log('divideBy5')
+  return new Promise(r => setTimeout(r, 1500, x / 5));
+}
+const multiplyBy3 = x => {
+  console.log('multiplyBy3')
+  return new Promise(r => setTimeout(r, 500, x * 3));
+}
 
-const foo = compose2([square, divideBy5, multiplyBy3]);
+const foo = composeReduce([square, divideBy5, multiplyBy3]);
 
 console.time("xxx");
 foo(10).then(value => {
-  console.log(value);
+  console.log(value, 'value');
   console.timeEnd("xxx");
 });
