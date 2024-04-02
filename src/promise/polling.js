@@ -10,6 +10,7 @@
 function sleep(ms) {
   return new Promise((res) => setTimeout(res, ms))
 }
+
 function polling(fetcher, isCompleted, delay) {
   return fetcher().then((result) => {
     if (isCompleted(result)) {
@@ -21,6 +22,31 @@ function polling(fetcher, isCompleted, delay) {
       return polling(fetcher, isCompleted, delay)
     })
   })
+}
+
+async function pollingAsync(fetcher, isCompleted, delay) {
+  try {
+    const funcRes = await fetcher();
+    if (isCompleted(funcRes)) {
+      return funcRes;
+    }
+  } catch {}
+  await sleep(delay);
+  return pollingAsync(fetcher, isCompleted, delay);
+}
+
+async function pollingAsyncWithoutRecursion(fetcher, isCompleted, delay) {
+  while (true) {
+    try {
+      let funcRes = await fetcher();
+      if (isCompleted(funcRes)) {
+        return funcRes;
+      }
+    } catch {}
+    await sleep(delay);
+  }
+}
+
 
   // return new Promise((resolve, reject) => {
   //   let result = fetcher();
@@ -35,7 +61,7 @@ function polling(fetcher, isCompleted, delay) {
   //     }
   //   });
   // })
-}
+// }
 
 
 const testingResponse = { status: "testing" };
@@ -43,13 +69,20 @@ const timeLimitResponse = { status: "timeLimit" };
 let i = 0;
 
 const fakeFetcher = async () => {
-  return i++ < 3 ? testingResponse : timeLimitResponse;
+  console.log("fakeFetcher");
+  if (i === 1) {
+    i++;
+    throw new Error(1);
+  } else {
+    return i++ < 3 ? testingResponse : timeLimitResponse;
+  }
+
 }
 
-const result = polling(
+const result = pollingAsync(
   fakeFetcher,
   (response) => response.status !== "testing",
-  500,
+  1000,
 );
 
 result.then(data => console.log(data));
